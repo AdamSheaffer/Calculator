@@ -5,11 +5,20 @@
 
   beforeEach(function(){
     $('#display-screen').val('');
+    var currentNumber = '';
+    var newNumber = '';
   });
+
+  function type(){
+    var args = Array.prototype.slice.call(arguments);
+    args.forEach(function(arg){
+      press(arg);
+    });
+  }
 
   describe('Entering numbers', function(){
 
-    describe('display output', function(){
+    describe('displayoutput', function(){
       it('should return the value of the display', function(){
         $('#display-screen').val(1.23);
         assert.equal(displayOutput(), 1.23);
@@ -19,109 +28,188 @@
       })
     })
 
-    describe('press', function(){
-      it('should display the number pressed', function(){
+    describe('type', function(){
+      it('should display the number typed', function(){
         assert.equal(displayOutput(), '');
-        press('1');
+        type(1);
         assert.equal(displayOutput(), 1);
+      })
+    })
+
+    describe('type', function(){
+      it('should display the number typed', function(){
+        assert.equal(displayOutput(), '');
+        type(2, 3);
+        assert.equal(displayOutput(), 23);
       })
     })
 
     describe('Entering the decimal number 7 . 8 9', function(){
       it('should display 7.89', function(){
-        press('7');
-        press('.');
-        press('8');
-        press('9');
+        type(7);
+        type('.');
+        type(8);
+        type(9);
         assert.equal(displayOutput(), 7.89);
       });
     });
+  });
 
-    describe('Addition', function(){
-      it('should display 2', function(){
-        press('1');
-        press('+');
-        press('1');
-        press('=');
-        assert.equal(displayOutput(), 2);
+  describe('Multiplying', function(){
+    describe('2 * 3 =', function(){
+      it('should be 6', function(){
+        type(2, '*', 3, '=')
+        assert.equal(displayOutput(), '6');
       });
     });
 
-    describe('Add after equal', function(){
-      it('should display 4', function(){
-        press('1');
-        press('+');
-        press('1');
-        press('+');
-        press('2');
-        press('=');
-        assert.equal(displayOutput(), 4);
-      })
-    })
-
-    describe('Add a decimal', function(){
-      it('should display .7', function(){
-        press('.');
-        press('3');
-        press('+');
-        press('.');
-        press('4');
-        press('=');
-        assert.equal(displayOutput(), 0.7);
-      })
-    })
-
-    describe('subtraction', function(){
-      it('should display 1', function(){
-        press('7');
-        press('-');
-        press('6');
-        press('=');
-        assert.equal(displayOutput(), 1);
-      })
-    });
-
-    describe('subtrating to a negative', function(){
-      it('should display -2', function(){
-        press('7');
-        press('-');
-        press('9');
-        press('=');
-        assert.equal(displayOutput(), -2);
-      })
-    })
-
-    describe('subtracting and adding after hitting equal', function(){
-      it('should display -9', function(){
-        press('7');
-        press('-');
-        press('9');
-        press('=');
-        press('-');
-        press('7');
-        press('=');
-        assert.equal(displayOutput(), -9);
+    describe('1 * . 2 = .2', function(){
+      it('should be .2', function(){
+        type(1, '*', '.', 2, '=')
+        assert.equal(displayOutput(), '0.2');
       });
     });
 
-    describe('division', function(){
-      it('should display 3', function(){
-        press('6');
-        press('/');
-        press('2');
-        press('=');
-        assert.equal(displayOutput(), 3);
-      })
-    })
+    describe('. 1 2 5 * . 5 =', function(){
+      it('should be .0625', function(){
+        type('.', 1, 2, 5, '*', '.', 5, '=')
+        assert.equal(displayOutput(), '0.0625');
+      });
+    });
 
-    describe('division with repeating decimals', function(){
-      it('should display 0.333333', function(){
-        press('1');
-        press('/');
-        press('3');
-        press('=');
-        assert.equal(displayOutput(), 0.333333);
-      })
-    })
+    describe('0 * 3 =', function(){
+      it('should be .0', function(){
+        type(0, '*', 3, '=');
+        assert.equal(displayOutput(), '0');
+      });
+    });
+
+    describe('3 . 1 4 * 0 =', function(){
+      it('should be .0', function(){
+        type(3, '.', 1, 4, '*', 0, '=')
+        assert.equal(displayOutput(), '0');
+      });
+    });
+
+    describe('3 . 1 4 * . 0 =', function(){
+      it('should be 0', function(){
+        type(3, '.', 1, 4, '*', '.', 0, '=')
+        assert.equal(displayOutput(), '0');
+      });
+    });
+
+    describe('3 * 4 * 2 =', function(){
+      it('should be 24', function(){
+        type(3, '*', 4, '*', 2, '=')
+        assert.equal(displayOutput(), '24');
+      });
+    });
+    describe('3 * 4 + 2 =', function(){
+      it('should be 14', function(){
+        type(3, '*', 4, '+', 2, '=')
+        assert.equal(displayOutput(), '14');
+      });
+    });
+    describe('3 * 0 * 2 =', function(){
+      it('should be 0', function(){
+        type(3, '*', 0, '*', 2, '=')
+        assert.equal(displayOutput(), '0');
+      });
+    });
+  });
+
+  describe('Adding', function () {
+    describe('7 . 8 9 + 1 + 2 =', function(){
+      it('should be 10.89', function () {
+        type(7, '.', 8, 9, '+', 1, '+', 2, '=');
+        assert.equal(displayOutput(), '10.89');
+      //  debugger;
+      });
+    });
+    describe('7 . 8 9 + 1 . 0 0 + 2 =', function(){
+      it('should be 10.89', function () {
+        type(7);
+        type('.');
+        type(8);
+        type('9');
+        type('+');
+        type(1);
+        type('.');
+        type(0);
+        type(0);
+        type('+');
+        type(2);
+        type('=');
+        assert.equal(displayOutput(), '10.89');
+      });
+    });
+    describe('1 + 1 =', function(){
+      it('should be 2', function () {
+        type(1);
+        type('+');
+        type(1);
+        type('=');
+        assert.equal(displayOutput(), '2');
+      });
+    });
+    describe('1 + 1 + 1 + 1 =', function(){
+      it('should be 4', function () {
+        type(1, '+', 1, '+',1, '+', 1, '=');
+        assert.equal(displayOutput(), '4');
+      });
+    });
+    describe('0 . 1 + . 2 =', function(){
+      it('should be 0.3', function () {
+        type(0);
+        type('.');
+        type(1);
+        type('+');
+        type('.');
+        type(2);
+        type('=');
+        assert.equal(displayOutput(), '0.3');
+      });
+    });
+    describe('. 1 1 1 1 1 1 1 1 + . 2 2 2 2 2 2 2 2 =', function(){
+      it('should be 0.3', function () {
+        type('.');
+        type(1);
+        type(1);
+        type(1);
+        type(1);
+        type(1);
+        type(1);
+        type(1);
+        type(1);
+        type('+');
+        type('.');
+        type(2);
+        type(2);
+        type(2);
+        type(2);
+        type(2);
+        type(2);
+        type(2);
+        type(2);
+        type('=');
+        assert.equal(displayOutput(), '0.33333333');
+      });
+    });
+    xdescribe('. 1 1 .1  + . 2 2 2  =', function(){
+      it('should be 0.3', function () {
+        type('.');
+        type(1);
+        type(1);
+        type('.');
+        type(1);
+        type('+');
+        type('.');
+        type(2);
+        type(2);
+        type(2);
+        type('=');
+        assert.equal(displayOutput(), '0.333');
+      });
+    });
   });
 })();
