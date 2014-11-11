@@ -6,6 +6,7 @@
   border-radius: 12px;
   padding: 10px;
   border: 2px solid black;
+  font-family: jura;
 }
 
 #display-screen {
@@ -36,7 +37,14 @@ a {
 
 #equal-button a{
   clear: left;
-  width: 190px;
+  width: 180px;
   height: 40px;
   margin: 10px  ;
+}
+
+#clear {
+  float: right;
+  height: 110px;
+  margin-right: 35px;
+  margin-left: 0
 }

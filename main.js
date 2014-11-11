@@ -3,7 +3,7 @@ $(document).ready(function(){
   //$('#display-screen').text('0');
 
   function displayOutput(){
-    return $('#display-screen').val();
+    return $('#display-screen').text();
   }
 
   $("a").click(function(){
@@ -54,7 +54,6 @@ $(document).ready(function(){
       //  }
         break;
       default:
-        console.log(buttonValue);
         currentNumber = $('#display-screen').text() + buttonValue;
         $('#display-screen').text(currentNumber);
     }

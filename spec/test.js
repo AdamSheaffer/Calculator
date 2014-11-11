@@ -4,7 +4,7 @@
   'use strict';
 
   beforeEach(function(){
-    $('#display-screen').val('');
+    $('#display-screen').text('');
     var currentNumber = '';
     var newNumber = '';
   });
@@ -20,10 +20,10 @@
 
     describe('displayoutput', function(){
       it('should return the value of the display', function(){
-        $('#display-screen').val(1.23);
-        assert.equal(displayOutput(), 1.23);
+        $('#display-screen').text('1.23');
+        assert.equal(displayOutput(), '1.23');
 
-        $('#display-screen').val(2.34);
+        $('#display-screen').text(2.34);
         assert.equal(displayOutput(), 2.34);
       })
     })
