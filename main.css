@@ -26,7 +26,8 @@ a {
   display: block;
   width: 45px;
   height: 45px;
-  background-color: #F3FAB6;
+  background: -webkit-gradient(linear, left top, left bottom, from(#EDEDED), to(#DCDCDC));
+  background: -moz-linear-gradient(top, #EDEDED, #DCDCDC);
   float: left;
   margin: 10px;
   border-radius: 12px;
