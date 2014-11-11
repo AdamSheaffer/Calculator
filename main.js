@@ -3,9 +3,9 @@ $(document).ready(function(){
   //$('#display-screen').text('0');
 
   function displayOutput(){
-    return $('#display-screen').val();
+    return $('#display-screen').text();
   }
-
+//4 + 6 + 2 =
   $("a").click(function(){
     press($(this).text());
   });
@@ -16,10 +16,19 @@ $(document).ready(function(){
   function press(buttonValue){
 
     function calculate(){
-      newNumber = (currentNumber + buttonValue);
-      currentNumber = '';
-
-      $('#display-screen').text(newNumber);
+        if (currentNumber !== ""){
+            if (newNumber !== ""){
+              newNumber = eval(newNumber + currentNumber);
+              $('#display-screen').text(newNumber + buttonValue);
+              newNumber = newNumber + buttonValue;
+              currentNumber = '';
+              //debugger;
+            } else {
+              $('#display-screen').text(currentNumber + buttonValue);
+              newNumber = currentNumber + buttonValue;
+              currentNumber = '';
+            }
+        }
     }
 
     switch(buttonValue) {
@@ -36,9 +45,11 @@ $(document).ready(function(){
         calculate();
         break;
       case '=':
-        newNumber = eval(currentNumber).toString();
-        $('#display-screen').text(newNumber.substring(0,10) * 1);
+        debugger;
+        newNumber = eval(newNumber + currentNumber).toString();
         //currentNumber = newNumber;
+        currentNumber = '';
+        $('#display-screen').text(newNumber.substring(0,10) * 1);
         break;
       case 'C':
         currentNumber = '';
@@ -48,15 +59,15 @@ $(document).ready(function(){
         //sign
         break;
       case '.':
-      //  if(currentNumber === undefined || currentNumber.indexOf('.') === -1){
+       // if(currentNumber.indexOf('.') === -1){
           currentNumber = $('#display-screen').text();
-          $('#display-screen').text(currentNumber += buttonValue);
-      //  }
+          $('#display-screen').text(currentNumber + buttonValue);
+       // }
         break;
       default:
-        console.log(buttonValue);
-        currentNumber = $('#display-screen').text() + buttonValue;
-        $('#display-screen').text(currentNumber);
+        $('#display-screen').text(buttonValue);
+        currentNumber = $('#display-screen').text();
+        console.log(currentNumber);
     }
   }
 });
