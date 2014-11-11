@@ -1,14 +1,13 @@
 $(document).ready(function(){
 
-  $('#display-screen').text('0');
+  //$('#display-screen').text('0');
 
   function displayOutput(){
     return $('#display-screen').val();
   }
 
-  $("#numbers > a").not("#clear").click(function(){
+  $("a").click(function(){
     press($(this).text());
-    $('#display-screen').text(number);
   });
 
   var currentNumber = '';
@@ -20,7 +19,7 @@ $(document).ready(function(){
       newNumber = (currentNumber + buttonValue);
       currentNumber = '';
 
-      $('#display-screen').val(newNumber);
+      $('#display-screen').text(newNumber);
     }
 
     switch(buttonValue) {
@@ -38,24 +37,26 @@ $(document).ready(function(){
         break;
       case '=':
         newNumber = eval(currentNumber).toString();
-        $('#display-screen').val(newNumber.substring(0,10) * 1);
+        $('#display-screen').text(newNumber.substring(0,10) * 1);
         //currentNumber = newNumber;
         break;
       case 'C':
-        // clear
+        currentNumber = '';
+        newNumber = '';
+        $('#display-screen').text(currentNumber);
       case '+/-':
         //sign
         break;
       case '.':
       //  if(currentNumber === undefined || currentNumber.indexOf('.') === -1){
-          currentNumber = $('#display-screen').val();
-          $('#display-screen').val(currentNumber += buttonValue);
+          currentNumber = $('#display-screen').text();
+          $('#display-screen').text(currentNumber += buttonValue);
       //  }
         break;
       default:
         console.log(buttonValue);
-        currentNumber = $('#display-screen').val() + buttonValue;
-        $('#display-screen').val(currentNumber);
+        currentNumber = $('#display-screen').text() + buttonValue;
+        $('#display-screen').text(currentNumber);
     }
   }
 });
