@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-  //$('#display-screen').text('0');
+  $('#display-screen').text('0');
 
   function displayOutput(){
     return $('#display-screen').text();
@@ -45,29 +45,44 @@ $(document).ready(function(){
         calculate();
         break;
       case '=':
-        debugger;
-        newNumber = eval(newNumber + currentNumber).toString();
-        //currentNumber = newNumber;
-        currentNumber = '';
-        $('#display-screen').text(newNumber.substring(0,10) * 1);
+        newNumber = eval(newNumber + currentNumber).toFixed(9);
+        $('#display-screen').text(eval(newNumber).toString());
+        currentNumber = $('#display-screen').text();
+        //debugger;
+        newNumber = '';
         break;
       case 'C':
         currentNumber = '';
         newNumber = '';
-        $('#display-screen').text(currentNumber);
+        $('#display-screen').text('0');
       case '+/-':
         //sign
         break;
       case '.':
-       // if(currentNumber.indexOf('.') === -1){
-          currentNumber = $('#display-screen').text();
-          $('#display-screen').text(currentNumber + buttonValue);
-       // }
+        if(currentNumber.indexOf('.') === -1){
+            if($('#display-screen').text() === '0'){
+               $('#display-screen').text('0' + buttonValue);
+               currentNumber = $('#display-screen').text();
+            } else {
+            $('#display-screen').text(currentNumber + buttonValue);
+               currentNumber = $('#display-screen').text();
+            }
+        } 
         break;
       default:
-        $('#display-screen').text(buttonValue);
-        currentNumber = $('#display-screen').text();
-        console.log(currentNumber);
+        if ($('#display-screen').text() === '0'){
+            if(buttonValue !== '0'){
+               $('#display-screen').text(buttonValue);
+               currentNumber = $('#display-screen').text();
+               console.log(currentNumber);
+            }
+            } else {
+            if (currentNumber.length < 11){
+               $('#display-screen').text(currentNumber + buttonValue);
+               currentNumber = $('#display-screen').text();
+            }
+        }
     }
   }
 });
+var operatorsAndZero = ['0', '+', '-', '*', '/']
