@@ -5,7 +5,7 @@ $(document).ready(function(){
   function displayOutput(){
     return $('#display-screen').text();
   }
-//4 + 6 + 2 =
+
   $("a").click(function(){
     press($(this).text());
   });
